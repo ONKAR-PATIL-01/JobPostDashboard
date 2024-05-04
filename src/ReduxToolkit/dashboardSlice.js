@@ -4,12 +4,12 @@ import axios from 'axios';
 
 export const fetchData = createAsyncThunk(
   'dashboard/fetchData',
-  async () => {
+  async ({ limit, offset }) => {
     const response = await axios.post(
       "https://api.weekday.technology/adhoc/getSampleJdJSON",
       {
-        limit: 10,
-        offset: 0
+        limit,
+        offset
       },
       {
         headers: {
@@ -24,9 +24,10 @@ export const fetchData = createAsyncThunk(
 const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState: {
-    data: null,
+    data: [],
     error: null,
-    status: 'idle'
+    status: 'idle',
+    totalCount: 0
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -36,7 +37,8 @@ const dashboardSlice = createSlice({
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.data = action.payload;
+        state.data = [...state.data, ...action.payload.jdList]; // Concatenate new data with existing data
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = 'failed';
