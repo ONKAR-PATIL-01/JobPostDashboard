@@ -8,7 +8,7 @@ export const fetchData = createAsyncThunk(
     const response = await axios.post(
       "https://api.weekday.technology/adhoc/getSampleJdJSON",
       {
-        limit: 947,
+        limit: 10,
         offset: 0
       },
       {
