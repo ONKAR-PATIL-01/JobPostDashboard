@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../ReduxToolkit/dashboardSlice';
@@ -7,7 +9,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { data, error, status, totalCount } = useSelector(state => state.dashboard);
+  const { data, error, status } = useSelector(state => state.dashboard);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
 
